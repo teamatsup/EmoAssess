@@ -153,21 +153,24 @@
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Account Information</a>
                     </li>
                     <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Record </a>
+                        <a href="{{URL::to('test/viewRecords')}}"><i class="fa fa-fw fa-bar-chart-o"></i> Record </a>
                     </li>
                     <!--<li>
                         <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                     </li> -->
-                    <li class="active">
+                   <!--  <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-edit"></i> Test <i class="fa fa-fw fa-caret-down"></i></a>
                          <ul id="demo" class="collapse">
                             <li>
-                                <a href="#">Take Test</a>
+                                <a href="{{URL::to('test/viewTest')}}">Take Test</a>
                             </li>
                             <li>
                                 <a href="{{URL::to('test/addTestQuestion')}}">Add Test</a>
                             </li>
                         </ul>
+                    </li> -->
+                    <li>
+                        <a href="{{URL::to('test')}}"><i class="fa fa-fw fa-edit"></i> Test </a>
                     </li>
                     <!-- <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>

@@ -18,7 +18,7 @@ class TestController extends Controller
     //
     public function takedefaulttest()
    	{
-        $testquestion = questions::all();
+      $testquestion = questions::all();
    		$data = array('title' => 'Bar ON EQ I:S',
                     'testquestions' =>  $testquestion
               );
@@ -107,9 +107,11 @@ class TestController extends Controller
         ));
 
         $test->save();
-        /*
-        *Test
-        *
+
+
+
+        
+        
         echo "Intrapersonal - ".$scl_intra."<br />";
         echo "Interpersonal - ".$scl_inter."<br />";
         echo "Stress Management - ".$scl_strss."<br />";
@@ -117,6 +119,147 @@ class TestController extends Controller
         echo "General Mood - ".$scl_gmood."<br />";
         echo "Total EQ - ".$total_eq."<br />";
         echo "Positive Impression - ".$scl_imprssn."<br />";
-        */
+        
     }
+    public function testinterp()
+    {
+           $testresult = test::find(4);
+           // $student_info = students::where('id','=',$testresult->student_id)->get();
+           //::where('votes', '>', 100)
+           // $gender = $student_info->gender;
+           // $age = $student_info->age;
+           // $firstname = $student_info->fname;
+           //print_r($firstname);
+
+           $intra_score = $testresult->intra_score;
+
+           if(45<=$intra_score)
+           {
+            $inter_a = "Enhanced Skill";
+           }
+           elseif(32<=$intra_score&&$intra_score<=44)
+           {
+            $inter_a = "Effective functioning";
+           }
+           elseif($intra_score<=31)
+          {
+            $inter_a = "Area of Enrichment";
+          }
+
+           $inter_score = $testresult->inter_score;
+           
+           if(46<=$inter_score)
+           {
+            $inter_b = "Enhanced Skill";
+           }
+           elseif(35<=$inter_score&&$inter_score<=45)
+           {
+            $inter_b = "Effective functioning";
+           }
+           elseif($inter_score<=34)
+          {
+            $inter_b = "Area of Enrichment";
+          }
+
+          $strss_mgt_score = $testresult->strss_mgt_score;
+          if(36<=$strss_mgt_score)
+           {
+            $inter_c = "Enhanced Skill";
+           }
+           elseif(25<=$strss_mgt_score&&$strss_mgt_score<=35)
+           {
+            $inter_c = "Effective functioning";
+           }
+           elseif($strss_mgt_score<=24)
+          {
+            $inter_c = "Area of Enrichment";
+          }
+
+          $adap_score = $testresult->adap_score;
+          if(32<=$adap_score)
+           {
+            $inter_d = "Enhanced Skill";
+           }
+           elseif(24<=$adap_score&&$adap_score<=32)
+           {
+            $inter_d = "Effective functioning";
+           }
+           elseif($adap_score<=23)
+          {
+            $inter_d = "Area of Enrichment";
+          }
+
+          $gen_mood_score = $testresult->gen_mood_score;
+          if(46<=$gen_mood_score)
+           {
+            $inter_e = "Enhanced Skill";
+           }
+           elseif(34<=$gen_mood_score&&$gen_mood_score<=45)
+           {
+            $inter_e = "Effective functioning";
+           }
+           elseif($gen_mood_score<=33)
+          {
+            $inter_e = "Area of Enrichment";
+          }
+
+          $total_eq = $testresult->total_eq;
+          if(40<=$total_eq)
+           {
+            $inter_f = "Enhanced Skill";
+           }
+           elseif(31<=$total_eq&&$total_eq<=39)
+           {
+            $inter_f = "Effective functioning";
+           }
+           elseif($total_eq<=30)
+          {
+            $inter_f = "Area of Enrichment";
+          }
+
+          $pstv_imprssn_score = $testresult->pstv_imprssn_score;
+          if(18<=$pstv_imprssn_score)
+           {
+            $inter_g = "Enhanced Skill";
+           }
+           elseif(9<=$pstv_imprssn_score&&$pstv_imprssn_score<=17)
+           {
+            $inter_g = "Effective functioning";
+           }
+           elseif($pstv_imprssn_score<=8)
+          {
+            $inter_g = "Area of Enrichment";
+          }            
+           // $testresult->inter_score;
+           // $testresult->strss_mgt_score;
+           // $testresult->adap_score;
+           // $testresult->gen_mood_score;
+           // $testresult->total_eq;
+           // $testresult->pstv_imprssn_score;
+
+
+          $data = array('title' => 'Test Interpretation',
+                    'intra_score' =>  $intra_score,
+                    'intra_interp' => $inter_a,
+                    'inter_score' =>  $inter_score,
+                    'inter_interp' => $inter_b,
+                    'strss_mgt_score' =>  $strss_mgt_score,
+                    'strss_mgt_interp' => $inter_c,
+                    'adap_score' =>  $adap_score,
+                    'adap_interp' => $inter_d,
+                    'gen_mood_score' =>  $gen_mood_score,
+                    'gen_mood_interp' => $inter_e,
+                    'total_eq_score' =>  $total_eq,
+                    'total_eq_interp' => $inter_f,
+                    'pstv_imprssn_score' =>  $pstv_imprssn_score,
+                    'pstv_imprssn_interp' => $inter_g,
+                      // 'age' => $age,
+                      // 'gender' => $gender,
+                      // 'firstname' => $firstname
+              );
+           return view('test/viewRecords')->with($data);  
+           
+    }
+
+ 
 }
