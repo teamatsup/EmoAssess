@@ -7,8 +7,9 @@
         @section('content')
         
         <p>
-
         	
+
+        	<b>Gender: {{$gender}}</b><br/>
         	Category of Interpretation:<br/>
         	<b>Enhance Skills</b>
         	<br/>: Insert Definition<br/>

@@ -20,6 +20,7 @@ Route::post('test', 'TestController@submitTest');
 Route::get('test', 'TestController@takedefaulttest');
 Route::get('test/viewRecords', 'TestController@testinterp');
 Route::get('test/addTestQuestion', 'TestController@addTestQuestion');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
