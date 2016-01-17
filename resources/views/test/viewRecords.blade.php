@@ -6,44 +6,181 @@
 
         @section('content')
         
-        <p>
-        	
-
-        	<b>Gender: {{$gender}}</b><br/>
-        	Category of Interpretation:<br/>
-        	<b>Enhance Skills</b>
-        	<br/>: Insert Definition<br/>
-        	<b>Effective Funtioning</b>
-        	<br/>: Insert Definition<br/>
-        	<b>Area Of Enrichment</b>
-        	<br/>: Insert Definition
+        <p> 
+            <b>Gender: {{$gender}}</b><br/>
+            Category of Interpretation:<br/>
+            <b>Enhance Skills</b>
+            <br/>: Insert Definition<br/>
+            <b>Effective Funtioning</b>
+            <br/>: Insert Definition<br/>
+            <b>Area Of Enrichment</b>
+            <br/>: Insert Definition
         </p>
 
-        <p>Intrapersonal Score: {{$intra_score}} <br/>
-           Interpretation: {{$intra_interp}} <br/>		
-        	Interpersonal Score: {{$inter_score}} <br/>
-           Interpretation: {{$inter_interp}} <br/>
-           Stress Management Score: {{$strss_mgt_score}} <br/>
-           Interpretation: {{$strss_mgt_interp}} <br/>
-           Adaptability Score: {{$adap_score}} <br/>
-           Interpretation: {{$adap_interp}} <br/>
-           General Mood Score: {{$gen_mood_score}} <br/>
-           Interpretation: {{$gen_mood_interp}} <br/>
-           Total EQ Score: {{$total_eq_score}} <br/>
-           Interpretation: {{$total_eq_interp}} <br/>
-           Positive Impression Score: {{$pstv_imprssn_score}} <br/>
-           Interpretation: {{$pstv_imprssn_interp}} <br/>
-           
-
-
-        </p>
-
-
-        <br/>
-
-
-
-          
+        <div class="row">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Scale</th>
+                    <th>Are for Enrichment</th>
+                    <th>Effective Functioning</th>
+                    <th>Enhanced Skills</th>
+                </tr>
+                <tr>
+                    <td>Interpersonal</td>
+                    @if($intra_interp == 0)
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($intra_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>Interpersonal</td>
+                    @if($inter_interp == 0)
+                        <td class="text-center"> 
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($inter_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>Stress Management</td>
+                    @if($strss_mgt_interp == 0)
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($strss_mgt_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>Adaptability</td>
+                    @if($adap_interp == 0)
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($adap_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>General Mood</td>
+                    @if($gen_mood_interp == 0)
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($gen_mood_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>Total EQ</td>
+                    @if($total_eq_interp == 0)
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($total_eq_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>Positive Impression</td>
+                    @if($pstv_imprssn_interp == 0)
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    @elseif($pstv_imprssn_interp == 1)
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                        <td></td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    @endif
+                </tr>
+            </table>
+        </div>
 
         @endsection
 
