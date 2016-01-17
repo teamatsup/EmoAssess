@@ -7,7 +7,12 @@
         @section('content')
         
         <p> 
-            <b>Gender: {{$gender}}</b><br/>
+            <b>Gender:
+                @if($gender == 0) Male
+                @else Female
+                @endif
+            </b>
+        <br/>
             Category of Interpretation:<br/>
             <b>Enhance Skills</b>
             <br/>: Insert Definition<br/>
