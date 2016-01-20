@@ -14,9 +14,9 @@ class CreateTestTable extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id')->unsigned();
-            $table->foreign("student_id")->references('id')
-                ->on('students')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign("user_id")->references('id')
+                ->on('users')->onDelete('cascade');
             $table->date('date_taken');
             $table->integer('intra_score');
             $table->integer('inter_score');

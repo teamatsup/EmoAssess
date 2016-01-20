@@ -24,12 +24,12 @@
 
         <div class="row">
             <table class="table table-striped table-bordered">
-                <tr>
+                <thead>
                     <th>Scale</th>
-                    <th>Are for Enrichment</th>
+                    <th>Area for Enrichment</th>
                     <th>Effective Functioning</th>
                     <th>Enhanced Skills</th>
-                </tr>
+                </thead>
                 <tr>
                     <td>Interpersonal</td>
                     @if($intra_interp == 0)

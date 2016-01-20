@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class test extends Model
 {
     protected $fillable = [
-    	'student_id',
+    	'user_id',
     	'date_taken',
     	'intra_score',
     	'inter_score',
@@ -18,8 +18,8 @@ class test extends Model
     	'pstv_imprssn_score'
     ];
 
-    public function student()
+    public function user()
     {
-    	return $this->belongsTo('App\students');
+    	return $this->hasOne('App\User');
     }
 }

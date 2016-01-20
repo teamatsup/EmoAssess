@@ -15,10 +15,10 @@ class students extends Model
 
     public function test()
     {
-    	return $this->hasOne('App\test');
+    	return $this->belongsTo('App\test');
     }
 
-    public function students_questions()
+    public function students_question()
     {
     	return $this->belongsTo('App\student_question');
     }

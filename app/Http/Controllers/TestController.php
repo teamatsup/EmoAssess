@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\questions;
-use App\students;
+use App\User;
 use App\student_question;
 use App\test;
 
@@ -15,12 +15,23 @@ use Input;
 
 class TestController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function takedefaulttest()
     {
-      $testquestion = questions::all();
+        if( (test::where('user_id', '=', 1)->count()) == 1)
+        {
+           return $this->testinterp();
+        }
+
+        $testquestion = questions::all();
+        
         $data = array('title' => 'Bar ON EQ I:S',
                     'testquestions' =>  $testquestion
-              );
+        );
 
         return view('test/viewTest')->with($data);
     }
@@ -32,25 +43,34 @@ class TestController extends Controller
         return view('test/addTestQuestion')->with($data);
     }
 
+    /**
+    * Save student's Emotional Stability test
+    *
+    * @return Response
+    */
     public function submitTest()
     {
-        $student = students::find(1);
+        $user = User::find(3);
 
-        $scl_intra      = 0;
-        $scl_inter      = 0;
-        $scl_strss      = 0;
-        $scl_adap       = 0;
-        $scl_gmood      = 0;
-        $total_eq       = 0;
-        $scl_imprssn    = 0;
+        // initialized scales' scores to zero
+        $scl_intra      = 0; // Intrapersonal Scale
+        $scl_inter      = 0; // Interpersonal Scale
+        $scl_strss      = 0; // Stress Management Scale
+        $scl_adap       = 0; // Adapatability Scale
+        $scl_gmood      = 0; // General Mood Scale
+        $total_eq       = 0; // Total Emotional Quotient Scale
+        $scl_imprssn    = 0; // Positive Impression Scale
 
+        // Iterate through questions taken
         for($itemNum = 0; $itemNum <= 50; $itemNum++)
         {
+            // Get the answer for the question
+            // Find the question in database
             $answer = Input::get($itemNum);
-            //echo $answer;
-
             $question = questions::find($itemNum);
 
+            // Determine question's category;
+            // Add question's value to the category
             switch ($question->scale_type){
                 case 1:
                     $scl_intra += $answer;
@@ -80,10 +100,9 @@ class TestController extends Controller
                     break;
             }
 
-            //echo "<br/>";
-
+            // Save student's answer to the question
             $student_question = new student_question(array(
-                'student_id'    => $student->id,
+                'user_id'       => $user->id,
                 'question_id'   => $question->id,
                 'value'         => $answer
             ));
@@ -91,11 +110,13 @@ class TestController extends Controller
             $student_question->save();
         }
 
+        // Compute total Emotional Quotient
         $total_eq = ($scl_intra + $scl_inter + $scl_strss
                 + $scl_adap + $scl_gmood) / 5;
 
+        // Save the test
         $test = new test(array(
-            'student_id'            => $student->id,
+            'user_id'               => $user->id,
             'date_taken'            => date('Y-m-d'),
             'intra_score'           => $scl_intra,
             'inter_score'           => $scl_inter,
@@ -108,10 +129,16 @@ class TestController extends Controller
 
         $test->save();        
     }
-    
+
+    /**
+    * Get equivalent measuremtn for 
+    * student's EQ-i scales' scores
+    *
+    * @return Response
+    */
     public function testinterp()
     {
-        $testresult = test::find(1);
+        $testresult = test::find(4);
 
         $intra_score        = $testresult->intra_score;
         $inter_score        = $testresult->inter_score;
@@ -121,13 +148,14 @@ class TestController extends Controller
         $total_eq           = $testresult->total_eq;
         $pstv_imprssn_score = $testresult->pstv_imprssn_score;
 
-        $gender = 1;
+        $gender = 0;
         $age    = 19;
 
-        //Male
+        //Student is male
         if ($gender == 0)
         {
-            if($age >= 16 && $age <= 29)
+            // Determine age
+            if($age >= 16 && $age <= 29) // Ages 16 to 29
             {
                 $ranges = array(
                     "a" => array(32, 45), 
@@ -139,7 +167,7 @@ class TestController extends Controller
                     "g" => array(9, 18)
                 );
             }
-            else //if($age >= 30 && $age <= 49)
+            else //if($age >= 30 && $age <= 49) // Ages 30 to 29
             {
                 $ranges = array(
                     "a" => array(34, 47), 
@@ -154,10 +182,10 @@ class TestController extends Controller
 
         }
 
-        //Female
-        if ($gender == 1)
+        // Student is female
+        else if ($gender == 1)
         {
-            if($age >= 16 && $age <= 29)
+            if($age >= 16 && $age <= 29)// Ages 16 to 29
             {
                 $ranges = array(
                     "a" => array(31, 44),
@@ -169,7 +197,7 @@ class TestController extends Controller
                     "g" => array(8, 18)
                 ); 
             }
-            else //if($age >= 30 && $age <= 39)
+            else //if($age >= 30 && $age <= 39) // Ages 30 to 29
             {
                 $ranges = array(
                     "a" => array(34, 48),
@@ -183,13 +211,14 @@ class TestController extends Controller
             }
         }
 
-        $inter_a = $this->interpretScore($ranges["a"], $intra_score);
-        $inter_b = $this->interpretScore($ranges["b"], $inter_score);
-        $inter_c = $this->interpretScore($ranges["c"], $strss_mgt_score);
-        $inter_d = $this->interpretScore($ranges["d"], $adap_score);
-        $inter_e = $this->interpretScore($ranges["e"], $gen_mood_score);
-        $inter_f = $this->interpretScore($ranges["f"], $total_eq);
-        $inter_g = $this->interpretScore($ranges["g"], $pstv_imprssn_score);
+        // Get interpretations
+        $inter_a = $this->interpretScore($ranges["a"], $intra_score); // Intrapersonal Scale
+        $inter_b = $this->interpretScore($ranges["b"], $inter_score); // Interpersonal Scale
+        $inter_c = $this->interpretScore($ranges["c"], $strss_mgt_score); // Stress Management Scale
+        $inter_d = $this->interpretScore($ranges["d"], $adap_score); // Adaptability Scale
+        $inter_e = $this->interpretScore($ranges["e"], $gen_mood_score); // General Mood Scale
+        $inter_f = $this->interpretScore($ranges["f"], $total_eq); // Total Emotional Quotient Scale
+        $inter_g = $this->interpretScore($ranges["g"], $pstv_imprssn_score); // Positive Impression Scale
            
         $data = array('title'       => 'Test Interpretation',
             'intra_score'           => $intra_score,
@@ -204,25 +233,34 @@ class TestController extends Controller
             'gen_mood_interp'       => $inter_e,
             'total_eq_score'        => $total_eq,
             'total_eq_interp'       => $inter_f,
-            'pstv_imprssn_score'    =>  $pstv_imprssn_score,
+            'pstv_imprssn_score'    => $pstv_imprssn_score,
             'pstv_imprssn_interp'   => $inter_g,
             'gender'                => $gender,
         );
 
+        // View results
         return view('test/viewRecords')->with($data);   
     }
 
+    /**
+    * Interpret each scale's score
+    *
+    * @param array $range
+    * @param int $score
+    * @return int
+    */
     public function interpretScore($range, $score)
     {
-        if ($score < $range[0]) 
+        // Determine Measurement
+        if ($score < $range[0]) // Score belongs to Area for Enrichment
         {
             return 0;
         }
-        else if ($score >= $range[0] && $score <= $range[1]) 
+        else if ($score >= $range[0] && $score <= $range[1]) //Score belongs to Effective Functioning
         {
             return 1;
         }
 
-        return 2;
+        return 2; // Score belongs to Enhanced Skills
     }
 }

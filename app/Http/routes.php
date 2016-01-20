@@ -10,16 +10,29 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/', 'WelcomeController@index');
 Route::get('contact', 'WelcomeController@contact');
 Route::post('test', 'TestController@submitTest');
 Route::get('test', 'TestController@takedefaulttest');
 Route::get('test/viewRecords', 'TestController@testinterp');
 Route::get('test/addTestQuestion', 'TestController@addTestQuestion');
+
+/*
+* Register Admin routes
+*/
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+/*
+* Login Admin routes
+*/
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+
+/*
+* Logout Admin route
+*/
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 /*
 |--------------------------------------------------------------------------

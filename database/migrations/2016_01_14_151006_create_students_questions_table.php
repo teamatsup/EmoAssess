@@ -13,13 +13,13 @@ class CreateStudentsQuestionsTable extends Migration
     public function up()
     {
         Schema::create('student_questions', function (Blueprint $table) {
-            $table->integer('student_id')->unsigned();
-            $table->foreign("student_id")->references('id')
-                ->on('students')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign("user_id")->references('id')
+                ->on('users')->onDelete('cascade');
             $table->integer('question_id')->unsigned();
             $table->foreign("question_id")->references('id')
                 ->on('questions')->onDelete('cascade');
-            $table->primary(['student_id', 'question_id']);
+            $table->primary(['user_id', 'question_id']);
             $table->integer('value');
             $table->timestamps();
         });
