@@ -12,8 +12,11 @@
 */
 Route::get('/', 'WelcomeController@index');
 Route::get('contact', 'WelcomeController@contact');
+Route::get('test', [
+	'middleware' => 'auth',
+	'uses' => 'TestController@takedefaulttest'
+]);
 Route::post('test', 'TestController@submitTest');
-Route::get('test', 'TestController@takedefaulttest');
 Route::get('test/viewRecords', 'TestController@testinterp');
 Route::get('test/addTestQuestion', 'TestController@addTestQuestion');
 

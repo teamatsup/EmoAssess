@@ -23,7 +23,7 @@
         <![endif]-->
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="{{URL::asset('ico/favicon.png')}}">
+        <link rel="shortcut icon" href="{{URL::asset('ico/FMO.ico')}}">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{URL::asset('ico/apple-touch-icon-144-precomposed.png')}}">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{URL::asset('ico/apple-touch-icon-114-precomposed.png')}}">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{URL::asset('ico/apple-touch-icon-72-precomposed.png')}}">
@@ -38,20 +38,16 @@
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
+                        <div class="col-sm-4"><img class="img-responsive" style="display:inline;" src="{{URL::asset('img/FMO.png')}}"></div>
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>EmoAssessor</strong> Login </h1>
-                            <div class="description">
-                            	<p>
-	                            	<strong>University of the Immaculate Conception</strong>
-                            	</p>
-                            </div>
+                            <h1 style="display:inline;"><strong>EmoAssessor</strong> Login </h1>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                         	<div class="form-top">
                         		<div class="form-top-left">
-                        			<h3>Login to our site</h3>
+                                    <img class="img-responsive" src="{{URL::asset('img/uic-logo.png')}}">
                             		<p>Enter your ID and password to log on:</p>
                         		</div>
                         		<div class="form-top-right">

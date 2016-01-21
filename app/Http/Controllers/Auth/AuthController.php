@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectPath = '/';
 
     protected $username = 'id_number';
 
@@ -52,8 +52,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            //'name' => 'required|max:255',
-            'id_number' => 'required|max:20',
+            'name' => 'required|max:255',
+            'id_number' => 'required|max:20|uniqe:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
