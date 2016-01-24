@@ -15,6 +15,11 @@ use Input;
 
 class TestController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function takedefaulttest()
     {
         if( (test::where('user_id', '=', 1)->count()) == 1)
