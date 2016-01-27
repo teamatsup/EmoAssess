@@ -11,21 +11,8 @@
 |
 */
 
-/*
-* Register Admin routes
-*/
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+	
 
-/*
-* Login Admin routes
-*/
-
-
-/*
-* Logout Admin route
-*/
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -37,13 +24,34 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => 'web'], function () {
+	
+	// Login/Logout User routes
 	Route::get('auth/login', 'Auth\AuthController@getLogin');
 	Route::post('auth/login', 'Auth\AuthController@postLogin');
-    Route::get('/', 'WelcomeController@index');
-	Route::get('contact', 'WelcomeController@contact');
+	Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+	// Register User routes
+	Route::get('auth/register', 'Auth\AuthController@getRegister');
+	Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+	// Home Page
+	Route::get('/', 'TestController@takedefaulttest');
+
+	// Take/Submit Test
 	Route::get('test', 'TestController@takedefaulttest');
 	Route::post('test', 'TestController@submitTest');
+
+	// Interpret results
 	Route::get('test/viewRecords', 'TestController@testinterp');
+
+	// Add Question
 	Route::get('test/addTestQuestion', 'TestController@addTestQuestion');
+
+	// Get all or one student results
+	Route::get('records', 'TestController@takedefaulttest');
+	Route::get('records/{id_number}', 'TestController@getStudentRecord');
+
+	// Logout
+	Route::get('logout', 'TestController@logout');
 });

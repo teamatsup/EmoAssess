@@ -15,11 +15,12 @@ class test extends Model
     	'adap_score',
     	'gen_mood_score',
     	'total_eq',
-    	'pstv_imprssn_score'
+    	'pstv_imprssn_score',
+        'index_inconsistency',
     ];
 
     public function user()
     {
-    	return $this->hasOne('App\User');
+    	return $this->belongsTo('App\User');
     }
 }

@@ -12,6 +12,8 @@ use App\student_question;
 use App\test;
 
 use Input;
+use Session;
+use Auth;
 
 class TestController extends Controller
 {
@@ -22,7 +24,21 @@ class TestController extends Controller
     
     public function takedefaulttest()
     {
-        if( (test::where('user_id', '=', 1)->count()) == 1)
+        if(Auth::user()->privilege == 0)
+        {
+            $tests = test::all();
+
+            $data = array(
+                'title' => 'Test Records',
+                'tests' => $tests,
+            );
+
+            return view('records/all')->with($data);
+        }
+
+        // Detemine if user has taken the test already
+        // Go to 'results' page
+        if( (test::where('user_id', '=', Auth::user()->id)->count()) == 1 )
         {
            return $this->testinterp();
         }
@@ -50,7 +66,21 @@ class TestController extends Controller
     */
     public function submitTest()
     {
-        $user = User::find(3);
+        $user = new User( array(
+            'id_number' => Input::get('id_number'),
+            'fname'     => Input::get('fname'),
+            'lname'     => Input::get('lname'),
+            'course'    => 'Information Technology',
+            'gender'    => Input::get('gender'),
+            'age'       => Input::get('age'),
+            'email'     => Input::get('email'),
+            'password'  => md5('temppass'),
+            'privilege' => 1,
+        ));
+
+        $user->save();
+
+        $user = User::where('id_number', Input::get('id_number'))->first();
 
         // initialized scales' scores to zero
         $scl_intra      = 0; // Intrapersonal Scale
@@ -60,6 +90,11 @@ class TestController extends Controller
         $scl_gmood      = 0; // General Mood Scale
         $total_eq       = 0; // Total Emotional Quotient Scale
         $scl_imprssn    = 0; // Positive Impression Scale
+        $index_inc      = 0; // Index of Inconsistency
+
+        $pairIndex = 0; // index counter
+        $indexInc_pair = // question pairs
+            [8, 14, 17, 23, 22, 40, 27, 9, 31, 37, 33, 48, 35, 41, 43, 47]; 
 
         // Iterate through questions taken
         for($itemNum = 0; $itemNum <= 50; $itemNum++)
@@ -68,6 +103,17 @@ class TestController extends Controller
             // Find the question in database
             $answer = Input::get($itemNum);
             $question = questions::find($itemNum);
+
+            // Determine if current question has a
+            // pair for index of inconsistency
+            if ($itemNum == $indexInc_pair[$pairIndex])
+            {
+                $index_inc += (
+                    $indexInc_pair[$pairIndex] - $indexInc_pair[$pairIndex + 1]
+                    );
+
+                $pairIndex = ($pairIndex + 2) % 16;
+            }
 
             // Determine question's category;
             // Add question's value to the category
@@ -124,10 +170,13 @@ class TestController extends Controller
             'adap_score'            => $scl_adap,
             'gen_mood_score'        => $scl_gmood,
             'total_eq'              => $total_eq,
-            'pstv_imprssn_score'    => $scl_imprssn
+            'index_inconsistency'   => $index_inc,
+            'pstv_imprssn_score'    => $scl_imprssn,
         ));
 
-        $test->save();        
+        $test->save();
+
+        return $this->testinterp();
     }
 
     /**
@@ -138,15 +187,30 @@ class TestController extends Controller
     */
     public function testinterp()
     {
-        $testresult = test::find(4);
+        // Determine if user has not taken the test yet
+        // Go to 'take test' page
+        if( (test::where('user_id', '=', Auth::user()->id)->count()) == 0 )
+        {
+            return $this->takedefaulttest();
+        }
 
-        $intra_score        = $testresult->intra_score;
-        $inter_score        = $testresult->inter_score;
-        $strss_mgt_score    = $testresult->strss_mgt_score;
-        $adap_score         = $testresult->adap_score;
-        $gen_mood_score     = $testresult->gen_mood_score;
-        $total_eq           = $testresult->total_eq;
-        $pstv_imprssn_score = $testresult->pstv_imprssn_score;
+        $testResult = test::where('user_id', '=', Auth::user()->id)->first();
+
+        $data = $this->getInterpretations("Test Interpretation", $testResult);
+
+        // View results
+        return view('test/viewRecords')->with($data);   
+    }
+
+    public function getInterpretations($title, $testResult)
+    {
+        $intra_score        = $testResult->intra_score;
+        $inter_score        = $testResult->inter_score;
+        $strss_mgt_score    = $testResult->strss_mgt_score;
+        $adap_score         = $testResult->adap_score;
+        $gen_mood_score     = $testResult->gen_mood_score;
+        $total_eq           = $testResult->total_eq;
+        $pstv_imprssn_score = $testResult->pstv_imprssn_score;
 
         $gender = 0;
         $age    = 19;
@@ -220,7 +284,7 @@ class TestController extends Controller
         $inter_f = $this->interpretScore($ranges["f"], $total_eq); // Total Emotional Quotient Scale
         $inter_g = $this->interpretScore($ranges["g"], $pstv_imprssn_score); // Positive Impression Scale
            
-        $data = array('title'       => 'Test Interpretation',
+        $data = array('title'       => $title,
             'intra_score'           => $intra_score,
             'intra_interp'          => $inter_a,
             'inter_score'           => $inter_score,
@@ -236,10 +300,10 @@ class TestController extends Controller
             'pstv_imprssn_score'    => $pstv_imprssn_score,
             'pstv_imprssn_interp'   => $inter_g,
             'gender'                => $gender,
+            'index_inconsistency'   => $testResult->index_inconsistency,
         );
 
-        // View results
-        return view('test/viewRecords')->with($data);   
+        return $data;
     }
 
     /**
@@ -262,5 +326,22 @@ class TestController extends Controller
         }
 
         return 2; // Score belongs to Enhanced Skills
+    }
+
+    public function getStudentRecord($id)
+    {
+        $testResult = test::where('user_id', $id)->first();
+
+        $data = $this->getInterpretations($testResult->user->fname." ".$testResult->user->lname." "." | Result", $testResult);
+
+        return view('records/student')->with($data)
+                                    ->with('testResult', $testResult);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->to('/');
     }
 }

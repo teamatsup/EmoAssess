@@ -184,6 +184,11 @@
                         </td>
                     @endif
                 </tr>
+                <tfoot>
+                    <th>Index of Inconsistency:</th>
+                    <th>{{$index_inconsistency}}</th>
+                    <th colspan="2">Values greater than or equal to 12 show inconsistency.</th>
+                </tfoot>
             </table>
         </div>
 
