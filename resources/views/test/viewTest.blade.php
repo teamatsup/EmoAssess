@@ -34,20 +34,6 @@
         <div class="row">
             <form method="POST" action="{{URL::to('test')}}" name="submitQuestion">
                  {!! csrf_field() !!}
-
-                <div class="form-group col-md-6">
-                    <label for="form-id-number" >ID number</label>
-                    <input type="text" name="id_number" placeholder="ID Number..." class="form-id-num form-control" id="id_number" required><br />
-                    <label for="form-fname">First Name</label>
-                    <input type="text" name="fname" placeholder="First Name..." class="form-fname form-control" id="fname"><br>
-                    <label for="form-lname">Last Name</label>
-                    <input type="text" name="lname" placeholder="Last Name..." class="form-lname form-control" id="lname">,<br>.
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="form-email">Email Address</label>
-                    <input type="email" name="email" placeholder="Email Add..." class="form-email form-control" id="email" required>,<br>.
-                    <label for="form-age">Age</label>
-                    <input type="number" name="age" placeholder="Age..." class="form-age form-control" id="age" required><br>
                     <!--<div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="gender" name="gender" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Gender

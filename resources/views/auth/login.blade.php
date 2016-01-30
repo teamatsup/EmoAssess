@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>EmoAssesor | Login</title>
+        <title>Feel Me Out | Login</title>
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
@@ -38,9 +38,12 @@
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-4"><img class="img-responsive" style="display:inline;" src="{{URL::asset('img/FMO.png')}}"></div>
-                        <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1 style="display:inline;"><strong>EmoAssessor</strong> Login </h1>
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="col-sm-6"><a href="URL::to('/')"><img class="img-responsive"src="{{URL::asset('img/FMO.png')}}" alt="FMO logo"></a></div>
+                            <div class="col-sm-6 text" style="text-align:left;">
+                                <h1><a href="URL::to('/')"><strong>Feel Me Out</strong></a><br/>Login</h1>
+                                <h2><strong></strong></h2>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -55,10 +58,23 @@
                         		</div>
                             </div>
                             <div class="form-bottom">
+                                <div class="row">
+                                    @if (count($errors) > 0)
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                </div>
 			                    <form role="form" action="/auth/login" method="post" class="login-form">
                                     {!! csrf_field() !!}
 			                    	<div class="form-group">
-			                    		<label class="sr-only" for="form-username">Username</label>
+			                    		<label class="sr-only" for="form-idnumber">ID Number</label>
 			                        	<input type="text" name="id_number" placeholder="ID Number..." class="form-username form-control" id="id_number">
 			                        </div>
 			                        <div class="form-group">
@@ -72,7 +88,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 social-login">
-                        	<h4>Can't login? Contact administrator</h4>
+                        	<h4>Can't login? <a href="{{URL::to('auth/register')}}">Register</a> or Contact administrator</h4>
                         </div>
                     </div>
                 </div>

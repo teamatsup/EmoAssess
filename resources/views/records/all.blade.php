@@ -21,7 +21,7 @@
 					<tr>
 						<td><a href="{{ URL::to('records', [$test->user->id]) }}">
 							{{ $test->user->id_number }} </a></td>
-						<td>{{ $test->user->fname." ".$test->user->fname }}</td>
+						<td>{{ $test->user->fname." ".$test->user->lname }}</td>
 						<td>{{ $test->user->age }}</td>
 						<td>@if( $test->user->gender == 1 ) male @else female @endif</td>
 						<td>{{ $test->user->course }}</td>
