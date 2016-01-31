@@ -24,6 +24,7 @@ class TestController extends Controller
     
     public function takedefaulttest()
     {
+        // User is admin
         if(Auth::user()->privilege == 0)
         {
             $tests = test::all();
@@ -66,21 +67,7 @@ class TestController extends Controller
     */
     public function submitTest()
     {
-        $user = new User( array(
-            'id_number' => Input::get('id_number'),
-            'fname'     => Input::get('fname'),
-            'lname'     => Input::get('lname'),
-            'course'    => 'Information Technology',
-            'gender'    => Input::get('gender'),
-            'age'       => Input::get('age'),
-            'email'     => Input::get('email'),
-            'password'  => md5('temppass'),
-            'privilege' => 1,
-        ));
-
-        $user->save();
-
-        $user = User::where('id_number', Input::get('id_number'))->first();
+        $user = Auth::user();
 
         // initialized scales' scores to zero
         $scl_intra      = 0; // Intrapersonal Scale
@@ -109,8 +96,8 @@ class TestController extends Controller
             if ($itemNum == $indexInc_pair[$pairIndex])
             {
                 $index_inc += (
-                    $indexInc_pair[$pairIndex] - $indexInc_pair[$pairIndex + 1]
-                    );
+                    Input::get($indexInc_pair[$pairIndex]) - Input::get($indexInc_pair[$pairIndex + 1])
+                );
 
                 $pairIndex = ($pairIndex + 2) % 16;
             }
@@ -199,7 +186,7 @@ class TestController extends Controller
         $data = $this->getInterpretations("Test Interpretation", $testResult);
 
         // View results
-        return view('test/viewRecords')->with($data);   
+        return view('test/viewRecords')->with($data)->with('testResult', $testResult);   
     }
 
     public function getInterpretations($title, $testResult)
@@ -212,11 +199,11 @@ class TestController extends Controller
         $total_eq           = $testResult->total_eq;
         $pstv_imprssn_score = $testResult->pstv_imprssn_score;
 
-        $gender = 0;
+        $gender = $testResult->user->gender;
         $age    = 19;
 
         //Student is male
-        if ($gender == 0)
+        if ($gender == 1)
         {
             // Determine age
             if($age >= 16 && $age <= 29) // Ages 16 to 29
@@ -247,7 +234,7 @@ class TestController extends Controller
         }
 
         // Student is female
-        else if ($gender == 1)
+        else if ($gender == 2)
         {
             if($age >= 16 && $age <= 29)// Ages 16 to 29
             {

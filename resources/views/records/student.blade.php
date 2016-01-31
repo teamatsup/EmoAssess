@@ -5,22 +5,29 @@
 @endsection
 
 @section('content')
-	<p> 
-        <b>Gender:
-            @if($testResult->user->gender == 0) Male
-            @else Female
-            @endif
-        </b>
-    <br/>
-        Category of Interpretation:<br/>
-        <b>Enhance Skills</b>
-        <br/>: Insert Definition<br/>
-        <b>Effective Funtioning</b>
-        <br/>: Insert Definition<br/>
-        <b>Area Of Enrichment</b>
-        <br/>: Insert Definition
-    </p>
-
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>{{$testResult->user->course}}</h3>
+            <h4>
+                @if($testResult->user->gender == 0) Male
+                @else Female
+                @endif
+                <br>
+                {{$testResult->user->age}} years old
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            Category of Interpretation:<br/>
+            <b>Enhance Skills</b>
+            <br/>: Insert Definition<br/>
+            <b>Effective Funtioning</b>
+            <br/>: Insert Definition<br/>
+            <b>Area Of Enrichment</b>
+            <br/>: Insert Definition
+        </div>
+    </div>
     <div class="row">
         <table class="table table-striped table-bordered">
             <thead>
