@@ -200,7 +200,7 @@ class TestController extends Controller
         $pstv_imprssn_score = $testResult->pstv_imprssn_score;
 
         $gender = $testResult->user->gender;
-        $age    = 19;
+        $age    = $testResult->user->age;
 
         //Student is male
         if ($gender == 1)
@@ -210,7 +210,7 @@ class TestController extends Controller
             {
                 $ranges = array(
                     "a" => array(32, 45), 
-                    "b" => array(31, 46), 
+                    "b" => array(35, 46), 
                     "c" => array(25, 36),
                     "d" => array(24, 32), 
                     "e" => array(34, 46), 
