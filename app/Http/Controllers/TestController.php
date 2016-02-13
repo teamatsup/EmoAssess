@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\questions;
 use App\User;
 use App\student_question;
 use App\test;
+use App\titles;
 
+use DB;
 use Input;
 use Session;
 use Auth;
@@ -53,12 +56,6 @@ class TestController extends Controller
         return view('test/viewTest')->with($data);
     }
 
-    public function addTestQuestion()
-    {
-        $data = array('title' => 'Bar ON EQ I:S' ); 
-
-        return view('test/addTestQuestion')->with($data);
-    }
 
     /**
     * Save student's Emotional Stability test
@@ -81,7 +78,7 @@ class TestController extends Controller
 
         $pairIndex = 0; // index counter
         $indexInc_pair = // question pairs
-            [8, 14, 17, 23, 22, 40, 27, 9, 31, 37, 33, 48, 35, 41, 43, 47]; 
+            [7, 13, 16, 22, 21, 39, 26, 8, 30, 36, 32, 47, 34, 40, 42, 46]; 
 
         // Iterate through questions taken
         for($itemNum = 0; $itemNum <= 50; $itemNum++)
@@ -307,7 +304,7 @@ class TestController extends Controller
         {
             return 0;
         }
-        else if ($score >= $range[0] && $score <= $range[1]) //Score belongs to Effective Functioning
+        else if ($score >= $range[0] && $score < $range[1]) //Score belongs to Effective Functioning
         {
             return 1;
         }
@@ -331,4 +328,81 @@ class TestController extends Controller
 
         return redirect()->to('/');
     }
+
+    public function addTestQuestion()
+    {
+
+        $titles = titles::all();
+        $questionsall = DB::table('questions')->get();
+        $data = array('titles' => $titles);
+                        
+        return view('test/addQuestion',compact('questionsall'))->with($data);
+    }
+     public function submitEditQuestion(Request $request, $id)
+    {
+            $datas = questions::findOrFail($id);
+            $datas->question=$request->Input('question');
+            $datas->scale_type=$request->Input('scale_type');
+            $datas->reverse=$request->Input('reverse');
+            $datas->title_id=$request->Input('title_id');
+            $datas->status=$request->Input('status');
+
+            $datas->save();
+            return back()->withInput();     
+    }
+    // CreateQuestionRequest  $request
+    public function submitAddQuestion()
+    {
+        //validation
+        $questions = new questions( array(
+            'question'       => Input::get('question'),       
+            'scale_type'     => Input::get('scale_type'),
+            'reverse'        => Input::get('reverse'),
+            'status'       => '1',
+            'title_id'    => Input::get('title_id'),
+        ));
+
+        $questions->save();   
+        return redirect('test/addQuestion'); 
+        // break;        
+        //          question::create($request->all());       
+    }
+     public function addTestTitle()
+    {
+        
+        $titles = DB::table('titles')->get(); 
+        // print_r($titles);
+        // break;
+                        
+        return view('test/addtitle',compact('titles'));
+    }
+    
+    public function submitEditTitle(Request $request, $id)
+    {
+            $datas = titles::findOrFail($id);
+            $datas->test_title=$request->Input('test_title');
+            $datas->test_description=$request->Input('title_description');
+            $datas->status=$request->Input('status');
+
+            $datas->save();
+            return back()->withInput();
+
+                  
+        
+    }
+    public function submitTestTitle()
+    {
+
+         $titles = new titles( array(
+            'test_title'             => Input::get('test_title'),
+            'test_description'       => Input::get('test_description'),
+            'status'                 => Input::get('status'),
+            
+            ));
+
+        $titles->save();   
+        return redirect('test/addTitle'); 
+       
+    }
+
 }

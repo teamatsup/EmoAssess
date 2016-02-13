@@ -46,12 +46,22 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('test/viewRecords', 'TestController@testinterp');
 
 	// Add Question
-	Route::get('test/addTestQuestion', 'TestController@addTestQuestion');
-
+	
 	// Get all or one student results
 	Route::get('records', 'TestController@takedefaulttest');
 	Route::get('records/{id_number}', 'TestController@getStudentRecord');
 
 	// Logout
 	Route::get('logout', 'TestController@logout');
+
+	//Admin
+	Route::get('test/addQuestion', 'TestController@addTestQuestion');
+	Route::post('test/addQuestion', 'TestController@submitAddQuestion');
+	Route::get('test/addtitle', 'TestController@addTestTitle');
+	Route::post('test/addtitle/', 'TestController@submitTestTitle');
+	Route::post('/test/addTitle1/{id}', 'TestController@submitEditTitle');
+	Route::post('test/addQuestion1/{id}', 'TestController@submitEditQuestion');
+
+
+	
 });
