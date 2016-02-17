@@ -103,7 +103,7 @@ class TestController extends Controller
             }
 
             // Determine question's category;
-            // Add question's value to the category
+            // Add question's answer to the total sum of the category
             switch ($question->scale_type){
                 case 1:
                     $scl_intra += $answer;
