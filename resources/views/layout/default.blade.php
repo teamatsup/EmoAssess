@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ $title }}</title>
+    <title></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -81,6 +81,12 @@
                     @if(Auth::user()->privilege == 0)
                         <li>
                             <a href="{{ URL::to('records') }}"><i class="fa fa-fw fa-bar-chart-o"></i> Student Tests </a>
+                        </li>
+                        <li>
+                        <a href="{{URL::to('test/addQuestion')}}"><i class="fa fa-fw fa-edit"></i>Question </a>
+                        </li>
+                         <li>
+                            <a href="{{URL::to('test/addtitle')}}"><i class="fa fa-fw fa-edit"></i>Title </a>
                         </li>
                     @else
                         <li>
