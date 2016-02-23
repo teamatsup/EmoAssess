@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\questions;
@@ -338,6 +337,7 @@ class TestController extends Controller
                         
         return view('test/addQuestion',compact('questionsall'))->with($data);
     }
+
      public function submitEditQuestion(Request $request, $id)
     {
             $datas = questions::findOrFail($id);
@@ -350,16 +350,17 @@ class TestController extends Controller
             $datas->save();
             return back()->withInput();     
     }
+
     // CreateQuestionRequest  $request
     public function submitAddQuestion()
     {
         //validation
         $questions = new questions( array(
-            'question'       => Input::get('question'),       
-            'scale_type'     => Input::get('scale_type'),
-            'reverse'        => Input::get('reverse'),
-            'status'       => '1',
-            'title_id'    => Input::get('title_id'),
+            'question'      => Input::get('question'),       
+            'scale_type'    => Input::get('scale_type'),
+            'reverse'       => Input::get('reverse'),
+            'status'        => '1',
+            'title_id'      => Input::get('title_id'),
         ));
 
         $questions->save();   
@@ -390,19 +391,32 @@ class TestController extends Controller
                   
         
     }
+    
     public function submitTestTitle()
     {
 
          $titles = new titles( array(
             'test_title'             => Input::get('test_title'),
             'test_description'       => Input::get('test_description'),
-            'status'                 => Input::get('status'),
+            'status'                 => 0,
             
             ));
 
         $titles->save();   
-        return redirect('test/addTitle'); 
+        return redirect()->to('test/addtitle'); 
        
     }
 
+    public function activateTitle($id)
+    {
+        $title = titles::where('status', "1")->first();
+        $title->status = 0;
+        $title->save();
+
+        $title = titles::find($id);
+        $title->status = 1;
+        $title->save();
+
+        return redirect()->to('test/addtitle');
+    }
 }

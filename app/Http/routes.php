@@ -59,9 +59,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::post('test/addQuestion', 'TestController@submitAddQuestion');
 	Route::get('test/addtitle', 'TestController@addTestTitle');
 	Route::post('test/addtitle/', 'TestController@submitTestTitle');
+	Route::post('test/activateTitle/{id}', 'TestController@activateTitle');
 	Route::post('/test/addTitle1/{id}', 'TestController@submitEditTitle');
 	Route::post('test/addQuestion1/{id}', 'TestController@submitEditQuestion');
-
-
-	
 });
