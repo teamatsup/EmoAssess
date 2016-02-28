@@ -44,11 +44,11 @@
                         <li><a href="#">Female</a></li>
                         </ul>
                     </div>-->
-                    <label for="form-gender">Gender</label><br>
+                   <!--  <label for="form-gender">Gender</label><br>
                     <select name="gender" id="gender" class="form-group form-gender" data-toggle="dropdown" required>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
-                    </select>
+                    </select> -->
                 </div>
                 <?php $itemnum = 1; ?>
                 @foreach($testquestions as $testquestion)

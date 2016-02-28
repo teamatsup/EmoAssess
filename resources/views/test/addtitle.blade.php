@@ -1,33 +1,50 @@
 @extends('layout.default')
 
 @section('head')
-	<h1>Add Test Title</h1>
+	<h1>Add Test</h1>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 @endsection
 
 @section('content')
-	<form method="POST" action="{{URL::to('test/addtitle')}} " name="submitTestTitle">
-		{!! csrf_field() !!}
-		<label>
-		    <label>Title: </label>
-		    <div class="form-group">
-				<input type="textbox" name="test_title" >
-			</div>      
-		</label>
-		<label>
-		    <label>Description: </label>
-		    <div class="form-group">
-				<input type="textbox" name="test_description" >
-			</div>        
-		</label>
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<div class="wrapper">
+		
+			<form class="form-horizontal" method="POST" action="{{URL::to('test/addtitle')}} " name="submitTestTitle">
 
+				{!! csrf_field() !!}
+				<div class="form-group form-group-lg">
+				      <label class="col-lg-2 control-label" for="lg">Title:</label>
+				      <div class="col-lg-10">
+				        <input class="form-control" type="text" name="test_title">
+				      </div>
+				
+				<br/> 
+				
+				     <label class="col-lg-2 control-label" for="lg">Description:</label>
+				      <div class="col-lg-10">
+				        <textarea class="form-control" rows="10" name="test_description"></textarea>
+				      </div>
+				
+				
+				<br/>
+					  <!-- <label class="col-lg-2 control-label" for="lg">Instruction:</label>
+				      <div class="col-lg-10">
+				        <textarea class="form-control" rows="10" name="instruction"></textarea>
+				      </div> -->
+					<div class="col-lg-10">
+						<button type="submit" class="btn btn-primary">Submit</button>
+				        
+	   		        </div>
+				</div>
+			</form>
+		
+	</div>
 	<!--Test titles list-->
+	<br/>
 	<div class= "wrapper">
-		<table id="example" class="table table-hover table-bordered">
+		<div class="col-lg-10 control-label" for="lg">
+		<table id="example" class="table table-hover table-bordered table-responsive">
 			<thead>
 				<th>Test Title</th>
 				<th>Edit</th>
@@ -68,7 +85,8 @@
 										          	</div>
 									            	<label>Test Description:</label>
 												<div class="form-group">
-												<input type="text" name="test_description" placeholder="{{$title->test_description}}">
+												<!-- <input type="text" name="test_description" placeholder="{{$title->test_description}}"> -->
+												<textarea class="form-control" rows="5" name="test_description" placeholder="{{$title->test_description}}"></textarea>
 												</div>
 														<button type="submit" class="btn btn-primary">save</button>	
 												</div>
@@ -109,6 +127,7 @@
 			 	@endforeach
 			</tbody>	
 		</table>
+		</div>
 	</div>
 @endsection
 

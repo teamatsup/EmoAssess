@@ -2,12 +2,15 @@
 
         @section('head')
          <h1>Add Test Questions</h1>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         @endsection
 
         @section('content')
        
         	<div class="wrapper">
            <form method="POST" action="{{URL::to('test/addQuestion')}} " name="SubmitAddQuestion">
+           	 {!! csrf_field() !!}
            		  <label class="text">
                                     <label>Question: </label>
                                      <div class="form-group">
@@ -84,14 +87,14 @@
                 			<div>
 								  
 								  <!-- Trigger the modal with a button -->
-								  <button type="button" class="btn btn-info btn-lg" data-toggle="modal"  data-target="#myModal{{$question->id}}">Edit</button>
+								  <button type="button" class="btn btn-info	 btn-lg" data-toggle="modal"  data-target="#myModal{{$question->id}}">Edit</button>
 
 								  <!-- Modal -->
 								  <div class="modal fade" id="myModal{{$question->id}}" role="dialog">
 								    <div class="modal-dialog">
 								    
 								      <!-- Modal content-->
-                    				<form method="POST" action="/test/addQuestion1/{{ $question->id }}" name="submitEditQuestion">
+                    				<form method="POST" action="/test/addQuestion1/{{$question->id }}" name="submitEditQuestion">
 								      <div class="modal-content">
 								        <div class="modal-header">
 								          <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -141,6 +144,7 @@
 
 
 @section('scriptjs')
+
 			<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
   <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
   <script>
@@ -151,4 +155,3 @@
 
 
 @endsection
-s

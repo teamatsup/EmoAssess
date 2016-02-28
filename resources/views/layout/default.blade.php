@@ -56,7 +56,7 @@
                         <i class="fa fa-user"></i> {{ Auth::user()->fname." ".Auth::user()->lname }} <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
+                       <!--  <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
@@ -64,7 +64,7 @@
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
+                        </li> -->
                         <li class="divider"></li>
                         <li>
                             <a href="{{URL::to('logout')}}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -86,7 +86,7 @@
                         <a href="{{URL::to('test/addQuestion')}}"><i class="fa fa-fw fa-edit"></i>Question </a>
                         </li>
                          <li>
-                            <a href="{{URL::to('test/addtitle')}}"><i class="fa fa-fw fa-edit"></i>Title </a>
+                            <a href="{{URL::to('test/addtitle')}}"><i class="fa fa-fw fa-edit"></i>Test Management </a>
                         </li>
                     @else
                         <li>

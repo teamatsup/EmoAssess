@@ -77,7 +77,7 @@ class TestController extends Controller
 
         $pairIndex = 0; // index counter
         $indexInc_pair = // question pairs
-            [7, 13, 16, 22, 21, 39, 26, 8, 30, 36, 32, 47, 34, 40, 42, 46]; 
+            [7, 13, 9, 33, 12, 45, 16, 22, 21, 39, 26, 8, 30, 36, 32, 47, 34, 40, 42, 46]; 
 
         // Iterate through questions taken
         for($itemNum = 0; $itemNum <= 50; $itemNum++)
@@ -95,7 +95,7 @@ class TestController extends Controller
                     Input::get($indexInc_pair[$pairIndex]) - Input::get($indexInc_pair[$pairIndex + 1])
                 );
 
-                $pairIndex = ($pairIndex + 2) % 16;
+                $pairIndex = ($pairIndex + 2) % 20;
             }
 
             // Determine question's category;
@@ -247,13 +247,13 @@ class TestController extends Controller
             else //if($age >= 30 && $age <= 39) // Ages 30 to 29
             {
                 $ranges = array(
-                    "a" => array(34, 48),
+                    "a" => array(34, 46),
                     "b" => array(40, 48),
                     "c" => array(27, 37),
-                    "d" => array(25, 32),
-                    "e" => array(34, 46),
-                    "f" => array(31, 40),
-                    "g" => array(9, 18)
+                    "d" => array(25, 33),
+                    "e" => array(35, 47),
+                    "f" => array(33, 41),
+                    "g" => array(10, 19)
                 ); 
             }
         }
@@ -333,8 +333,7 @@ class TestController extends Controller
 
         $titles = titles::all();
         $questionsall = DB::table('questions')->get();
-        $data = array('titles' => $titles);
-                        
+        $data = array('titles' => $titles);                 
         return view('test/addQuestion',compact('questionsall'))->with($data);
     }
 
